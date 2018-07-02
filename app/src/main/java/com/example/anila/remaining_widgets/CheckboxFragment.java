@@ -13,16 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-public class CheckboxFragment extends Fragment {
+public class CheckboxFragment extends Fragment  {
 
     private CheckBox mCheckBox;
     private RatingBar mRatingBar;
     private Button mButton;
-
+    private ImageButton mImageButton;
+    private ProgressDialog mProgress;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +39,35 @@ public class CheckboxFragment extends Fragment {
         mCheckBox = view.findViewById(R.id.checkBox);
         mButton=view.findViewById(R.id.rating_button);
         mRatingBar=view.findViewById(R.id.ratingBar);
+        mImageButton=view.findViewById(R.id.downlad_image);
+        mImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mProgress = new ProgressDialog(getContext());
+                mProgress.setMessage("Downloading Music");
+                mProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                mProgress.setIndeterminate(true);
+                mProgress.setProgress(0);
+                mProgress.show();
+                final int totalProgressTime = 100;
+                final Thread t = new Thread() {
+                    @Override
+                    public void run() {
+                        int jumpTime = 0;
+                        while (jumpTime < totalProgressTime) {
+                            try {
+                                Thread.sleep(200);
+                                jumpTime += 5;
+                                mProgress.setProgress(jumpTime);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                };
+                t.start();
+            }
+        });
 
 
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -87,4 +118,7 @@ public class CheckboxFragment extends Fragment {
         });
         return view;
     }
+
+
+
 }
