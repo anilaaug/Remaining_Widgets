@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Button mButton;
+    private Button mButton,mViewButton,mcontextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,15 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(myintent);
             }
         });
+        mViewButton=findViewById(R.id.view_button);
+        mViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewIntent=new Intent(getApplicationContext(),CustomViewActivity.class);
+                startActivity(viewIntent);
+            }
+        });
+
     }
 }
 
